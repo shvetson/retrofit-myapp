@@ -1,7 +1,6 @@
 package ru.shvets.myweather.util
 
-/** @author Oleg Shvets shvetson@gmail.com on 2022-09-25 */
-
+// Рекоменлация Google по применению этого класса
 sealed class Resource<T>(
     val data: T? = null,
     val message: String? = null

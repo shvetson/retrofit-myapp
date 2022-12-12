@@ -2,13 +2,11 @@ package ru.shvets.myweather.model.db
 
 import android.content.Context
 import androidx.room.*
-import ru.shvets.myweather.data.news.Article
+import ru.shvets.myweather.model.db.news.entity.ArticleEntity
 import ru.shvets.myweather.util.Constants.Companion.DATABASE_NAME
 
-/** @author Oleg Shvets shvetson@gmail.com on 2022-09-25 */
-
 @Database(
-    entities = [Article::class],
+    entities = [ArticleEntity::class],
     version = 1
 )
 

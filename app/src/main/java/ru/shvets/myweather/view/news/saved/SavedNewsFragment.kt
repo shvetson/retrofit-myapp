@@ -3,7 +3,7 @@ package ru.shvets.myweather.view.news.saved
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import ru.shvets.myweather.MainActivity
 import ru.shvets.myweather.R
 import ru.shvets.myweather.databinding.FragmentSavedNewsBinding
 import ru.shvets.myweather.view.news.NewsViewModel
@@ -12,10 +12,12 @@ import ru.shvets.myweather.view.news.NewsViewModel
 
 class SavedNewsFragment: Fragment(R.layout.fragment_saved_news) {
     private lateinit var binding: FragmentSavedNewsBinding
-    private val viewModel: NewsViewModel by viewModels()
+//    private val viewModel: NewsViewModel by viewModels()
+    private lateinit var viewModel: NewsViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSavedNewsBinding.bind(view)
+        viewModel = (activity as MainActivity).viewModel
     }
 }

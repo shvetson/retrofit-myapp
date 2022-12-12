@@ -1,4 +1,4 @@
-package ru.shvets.myweather.model.api
+package ru.shvets.myweather.model.api.weather
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -7,7 +7,7 @@ import ru.shvets.myweather.data.news.NewsResponse
 import ru.shvets.myweather.util.Constants.Companion.NEWS_API_KEY
 import ru.shvets.myweather.util.Constants.Companion.NEWS_COUNTRY
 
-interface NewsApiService {
+interface NewsAPI {
 
     @GET("v2/top-headlines")
     suspend fun getBreakingNews(

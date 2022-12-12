@@ -13,8 +13,10 @@ class Constants {
         const val NEWS_BASE_URL = "https://newsapi.org/"
         const val NEWS_API_KEY = "9bba04552e0f4b44aea4fda453663f33"
         const val NEWS_COUNTRY = "ru"
+        const val NEWS_SEARCH_TIME_DELAY = 500L
 
+        // Database
         const val DATABASE_NAME = "db_helpful.db"
-        const val TAG = "app_helpful"
+        const val TAG = "app_tag"
     }
 }

@@ -4,10 +4,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import ru.shvets.myweather.model.api.news.NewsApiService
+import ru.shvets.myweather.model.api.news.NewsAPI
+import ru.shvets.myweather.model.api.weather.WeatherAPI
 import ru.shvets.myweather.util.Constants.Companion.NEWS_BASE_URL
-
-/** @author Oleg Shvets shvetson@gmail.com on 2022-09-25 */
+import ru.shvets.myweather.util.Constants.Companion.WEATHER_BASE_URL
 
 class RetrofitInstance {
     companion object {
@@ -21,14 +21,17 @@ class RetrofitInstance {
                 .build()
 
             Retrofit.Builder()
-                .baseUrl(NEWS_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
-                .build()
+//                .build()
         }
 
-        val newsApi: NewsApiService by lazy {
-            retrofit.create(NewsApiService::class.java)
+        val newsApi: NewsAPI by lazy {
+            retrofit.baseUrl(NEWS_BASE_URL).build().create(NewsAPI::class.java)
+        }
+
+        val weatherApi: WeatherAPI by lazy {
+            retrofit.baseUrl(WEATHER_BASE_URL).build().create(WeatherAPI::class.java)
         }
     }
 }
