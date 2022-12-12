@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/rootFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="ru.shvets.myweather.view.splash.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" />
+    <fragment
+        android:id="@+id/rootFragment"
+        android:name="ru.shvets.myweather.view.root.RootFragment"
+        android:label="fragment_root"
+        tools:layout="@layout/fragment_root" />
+    <fragment
+        android:id="@+id/weatherFragment"
+        android:name="ru.shvets.myweather.view.weather.WeatherFragment"
+        android:label="fragment_weather"
+        tools:layout="@layout/fragment_weather" />
+    <fragment
+        android:id="@+id/breakingNewsFragment"
+        android:name="ru.shvets.myweather.view.news.breaking.BreakingNewsFragment"
+        android:label="fragment_breaking_news"
+        tools:layout="@layout/fragment_breaking_news" >
+        <action
+            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/savedNewsFragment"
+        android:name="ru.shvets.myweather.view.news.saved.SavedNewsFragment"
+        android:label="fragment_saved_news"
+        tools:layout="@layout/fragment_saved_news" >
+        <action
+            android:id="@+id/action_savedNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/searchNewsFragment"
+        android:name="ru.shvets.myweather.view.news.search.SearchNewsFragment"
+        android:label="fragment_search_news"
+        tools:layout="@layout/fragment_search_news" >
+        <action
+            android:id="@+id/action_searchNewsFragment_to_articleFragment"
+            app:destination="@id/articleFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/articleFragment"
+        android:name="ru.shvets.myweather.view.news.article.ArticleFragment"
+        android:label="fragment_article"
+        tools:layout="@layout/fragment_article" />
+</navigation>

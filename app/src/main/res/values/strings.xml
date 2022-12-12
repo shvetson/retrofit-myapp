@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Helpful</string>
+    <string name="splash">Splash</string>
+    <string name="title_weather">Weather</string>
+
+    <string name="title_tab_weather">Weather</string>
+    <string name="title_tab_news">News</string>
+
+    <string name="bottom_menu_weather">Weather</string>
+    <string name="bottom_menu_news">News</string>
+    <string name="bottom_menu_saved">Favourite</string>
+    <string name="bottom_menu_search">Search</string>
+</resources>
