@@ -4,20 +4,33 @@ plugins {
 
     //  Для работы с @Parcelize (одна из двух)
     id 'kotlin-parcelize'
+//    id 'kotlin-android-extensions'
+//    id 'kotlinx-serialization'
 
     // Для работы с Room
     id 'kotlin-kapt'
+
+    // Для работы с Args
+//    id 'androidx.navigation.safeargs'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "ru.shvets.myweather"
+        applicationId "ru.shvets.myappretrofit"
         minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
+
+        // specify directory for storing databases schemas
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
+        }
     }
 
         buildTypes {
@@ -38,7 +51,7 @@ android {
         viewBinding = true
     }
 
-    namespace 'ru.shvets.myweather'
+    namespace 'ru.shvets.myappretrofit'
 }
 
 dependencies {
@@ -97,4 +110,7 @@ dependencies {
     // Glide
 //    implementation 'com.github.bumptech.glide:glide:4.11.0'
 //    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Splash screen (Compose)
+//    implementation 'androidx.core:core-splashscreen:1.0.0'
 }
