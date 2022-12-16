@@ -3,6 +3,12 @@
     <string name="splash">Splash</string>
     <string name="title_weather">Weather</string>
 
+    <string name="title_page_breaking_news">News</string>
+    <string name="subtitle_page_breaking_news">Popular News</string>
+    <string name="title_page_search_news">Search</string>
+
+    <string name="hint_search">Musk invited</string>
+
     <string name="title_tab_weather">Weather</string>
     <string name="title_tab_news">News</string>
 

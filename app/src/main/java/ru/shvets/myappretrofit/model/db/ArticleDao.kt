@@ -18,5 +18,4 @@ interface ArticleDao {
 
     @Query("DELETE FROM articles WHERE id = :articleId")
     suspend fun deleteArticleById(articleId: Long)
-
 }

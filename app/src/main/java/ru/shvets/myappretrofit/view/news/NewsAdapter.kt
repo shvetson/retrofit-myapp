@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import com.bumptech.glide.Glide
 import ru.shvets.myappretrofit.data.news.Article
 import ru.shvets.myappretrofit.databinding.ItemArticlePreviewBinding
 
@@ -18,10 +18,10 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
         fun bind(article: Article) {
 
             binding.apply {
-                Picasso.get().load(article.urlToImage).into(imageViewArticleImage)
-                textViewSource.text = article.source?.name
+//                Picasso.get().load(article.urlToImage).into(imageViewArticleImage)
+                Glide.with(itemView).load(article.urlToImage).into(imageViewArticleImage)
+                imageViewArticleImage.clipToOutline = true
                 textViewTitle.text = article.title
-                textViewDescription.text = article.description
                 textViewPublishedAt.text = article.publishedAt
 
                 root.setOnClickListener {

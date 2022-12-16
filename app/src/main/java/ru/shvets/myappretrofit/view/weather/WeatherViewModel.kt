@@ -19,7 +19,6 @@ import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_API_LANG
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_API_METRIC
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_BASE_URL
 
-
 class WeatherViewModel(
     application: Application
 ) : AndroidViewModel(application) {
@@ -27,7 +26,8 @@ class WeatherViewModel(
     private val repo = (application.applicationContext as App).weatherRepository
 
     private val _data: MutableLiveData<Weather> = MutableLiveData()
-    val data: LiveData<Weather> = _data
+    val data: LiveData<Weather>
+        get() = _data
 
     fun getWeather(city: String): LiveData<Weather> {
         val call = repo.getCurrentWeather(

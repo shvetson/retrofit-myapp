@@ -31,14 +31,21 @@ class NewsViewModel(
 //    private val repo: NewsRepository
 //) : ViewModel() {
 
-    val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private val _breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val breakingNews: LiveData<Resource<NewsResponse>>
+        get() = _breakingNews
+
     var breakingNewsPage = 1
     var breakingNewsResponse: NewsResponse? = null
 
-    val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private val _searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    val searchNews: LiveData<Resource<NewsResponse>>
+        get() = _searchNews
+
     var searchNewsPage = 1
     var searchNewsResponse: NewsResponse? = null
 
+    //TODO Поправить, передать погоде первоначальную загрузку данных
     init {
         getBreakingNews(NEWS_COUNTRY)
     }
@@ -71,7 +78,7 @@ class NewsViewModel(
 
 
     fun searchNews(searchQuery: String) = viewModelScope.launch {
-            safeSearchNewsCall(searchQuery)
+        safeSearchNewsCall(searchQuery)
 //            searchNews.postValue(Resource.Loading())
 //            val response = repo.getSearchNews(searchQuery, searchNewsPage)
 //            searchNews.postValue(handleSearchNewsResponse(response))
@@ -120,35 +127,35 @@ class NewsViewModel(
     }
 
     private suspend fun safeBreakingNewsCall(countryCode: String) {
-        breakingNews.postValue(Resource.Loading())
+        _breakingNews.postValue(Resource.Loading())
         try {
-            if(hasInternetConnection()) {
+            if (hasInternetConnection()) {
                 val response = repo.getBreakingNews(countryCode, breakingNewsPage)
-                breakingNews.postValue(handleBreakingNewsResponse(response))
+                _breakingNews.postValue(handleBreakingNewsResponse(response))
             } else {
-                breakingNews.postValue(Resource.Error("No internet connection!"))
+                _breakingNews.postValue(Resource.Error("No internet connection!"))
             }
         } catch (t: Throwable) {
-            when(t) {
-                is IOException -> breakingNews.postValue(Resource.Error("Network Failure"))
-                else -> breakingNews.postValue(Resource.Error("Conversion error"))
+            when (t) {
+                is IOException -> _breakingNews.postValue(Resource.Error("Network Failure"))
+                else -> _breakingNews.postValue(Resource.Error("Conversion error"))
             }
         }
     }
 
     private suspend fun safeSearchNewsCall(searchQuery: String) {
-        searchNews.postValue(Resource.Loading())
+        _searchNews.postValue(Resource.Loading())
         try {
-            if(hasInternetConnection()) {
+            if (hasInternetConnection()) {
                 val response = repo.getSearchNews(searchQuery, searchNewsPage)
-                searchNews.postValue(handleSearchNewsResponse(response))
+                _searchNews.postValue(handleSearchNewsResponse(response))
             } else {
-                searchNews.postValue(Resource.Error("No internet connection!"))
+                _searchNews.postValue(Resource.Error("No internet connection!"))
             }
         } catch (t: Throwable) {
-            when(t) {
-                is IOException -> searchNews.postValue(Resource.Error("Network Failure"))
-                else -> searchNews.postValue(Resource.Error("Conversion error"))
+            when (t) {
+                is IOException -> _searchNews.postValue(Resource.Error("Network Failure"))
+                else -> _searchNews.postValue(Resource.Error("Conversion error"))
             }
         }
     }
