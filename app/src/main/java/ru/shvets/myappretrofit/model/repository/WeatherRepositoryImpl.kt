@@ -1,21 +1,19 @@
 package ru.shvets.myappretrofit.model.repository
 
-import retrofit2.Call
-import ru.shvets.myappretrofit.data.weather.Weather
-import ru.shvets.myappretrofit.model.api.weather.Common
+import retrofit2.Response
+import ru.shvets.myappretrofit.data.weather.WeatherResponse
+import ru.shvets.myappretrofit.model.api.RetrofitInstance
 
 /** @author Oleg Shvets shvetson@gmail.com on 2022-09-25 */
 
 class WeatherRepositoryImpl : WeatherRepository {
-    private val weatherApi = Common.weatherAPI
 
-    override fun getCurrentWeather(
+    override suspend fun getCurrentWeather(
         q: String,
         appid: String,
         units: String,
         lang: String
-    ): Call<Weather> {
-        return weatherApi.getCurrentWeather(q, appid, units, lang)
+    ): Response<WeatherResponse> {
+        return RetrofitInstance.weatherApi.getCurrentWeather(q, appid, units, lang)
     }
-
 }

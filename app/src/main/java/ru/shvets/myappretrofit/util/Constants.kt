@@ -5,6 +5,7 @@ class Constants {
     companion object {
         // Weather API
         const val WEATHER_BASE_URL = "https://api.openweathermap.org/"
+        const val WEATHER_ICON_URL = "https://openweathermap.org/img/w/"
         const val WEATHER_API_KEY = "ed99162a34a30298df0adee92fbc43b9"
         const val WEATHER_API_METRIC = "metric"
         const val WEATHER_API_LANG = "ru"

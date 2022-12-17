@@ -1,7 +1,9 @@
 package ru.shvets.myappretrofit.view.news.saved
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -17,15 +19,27 @@ import ru.shvets.myappretrofit.view.news.NewsAdapter
 import ru.shvets.myappretrofit.view.news.NewsViewModel
 
 class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
-    private lateinit var binding: FragmentSavedNewsBinding
+    private lateinit var _binding: FragmentSavedNewsBinding
+    private val mBinding get() = _binding
+//    private lateinit var actionBar: ActionBar
 
     //    private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var viewModel: NewsViewModel
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSavedNewsBinding.inflate(layoutInflater, container,false)
+//        actionBar = (activity as AppCompatActivity).supportActionBar!!
+//        actionBar.setTitle(R.string.title_weather)
+        return mBinding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentSavedNewsBinding.bind(view)
         viewModel = (activity as MainActivity).viewModel
 
         setupRecyclerView()
@@ -34,8 +48,10 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
             val bundle = Bundle().apply {
                 putParcelable("article", it)
             }
+
             findNavController().navigate(
-                R.id.action_savedNewsFragment_to_articleFragment,
+//                R.id.action_savedNewsFragment_to_articleFragment,
+                R.id.action_savedNewsFragment_to_articleDetailsFragment,
                 bundle
             )
         }
@@ -67,7 +83,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
         }
 
         ItemTouchHelper(itemTouchHelperCallback).apply {
-            attachToRecyclerView(binding.recyclerViewSavedNews)
+            attachToRecyclerView(mBinding.recyclerViewSavedNews)
         }
 
         viewModel.getAllSavedNewsArticle().observe(viewLifecycleOwner, Observer { list ->
@@ -77,7 +93,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        binding.recyclerViewSavedNews.apply {
+        mBinding.recyclerViewSavedNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(context)
 

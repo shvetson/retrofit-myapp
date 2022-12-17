@@ -1,16 +1,16 @@
 package ru.shvets.myappretrofit.model.repository
 
-import retrofit2.Call
-import ru.shvets.myappretrofit.data.weather.Weather
+import retrofit2.Response
+import ru.shvets.myappretrofit.data.weather.WeatherResponse
 
 /** @author Oleg Shvets shvetson@gmail.com on 2022-09-25 */
 
 interface WeatherRepository {
 
-    fun getCurrentWeather(
+    suspend fun getCurrentWeather(
         q: String,
         appid: String,
         units: String,
         lang: String
-    ): Call<Weather>
+    ): Response<WeatherResponse>
 }

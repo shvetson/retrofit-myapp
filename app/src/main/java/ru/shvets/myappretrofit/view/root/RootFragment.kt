@@ -1,15 +1,22 @@
 package ru.shvets.myappretrofit.view.root
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.databinding.FragmentRootBinding
 
 class RootFragment : Fragment(R.layout.fragment_root) {
-    private lateinit var binding: FragmentRootBinding
-    private lateinit var adapter: ViewPagerAdapter
+    private lateinit var _binding: FragmentRootBinding
+    private val mBinding get() = _binding
+//    private lateinit var actionBar: ActionBar
 
-    private var fragmentList: ArrayList<Fragment> = arrayListOf()
-    private val tabTitles = mutableMapOf<String, Int>()
+//    private lateinit var adapter: ViewPagerAdapter
+//
+//    private var fragmentList: ArrayList<Fragment> = arrayListOf()
+//    private val tabTitles = mutableMapOf<String, Int>()
 
 //    private var _context: Context? = null
 //
@@ -38,13 +45,15 @@ class RootFragment : Fragment(R.layout.fragment_root) {
 //            binding.viewPager.currentItem = it
 //        }
 //    }
-//
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View {
-//        binding = FragmentRootBinding.inflate(inflater, container, false)
-//
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentRootBinding.inflate(inflater, container, false)
+//        actionBar = (activity as AppCompatActivity).supportActionBar!!
+//        actionBar.setTitle(R.string.title_weather_forecast)
+
 //        val titles = ArrayList(tabTitles.keys)
 //        val icons = ArrayList(tabTitles.values)
 //
@@ -63,6 +72,7 @@ class RootFragment : Fragment(R.layout.fragment_root) {
 //                tab.setIcon(icons[pos])
 //            }.attach()
 //        }
-//        return binding.root
-//    }
+        return mBinding.root
+    }
+
 }

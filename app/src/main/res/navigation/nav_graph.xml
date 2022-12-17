@@ -3,66 +3,71 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/rootFragment">
+    app:startDestination="@id/weatherFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="ru.shvets.myappretrofit.view.splash.SplashFragment"
-        android:label="fragment_splash"
+        android:label="@string/splash"
         tools:layout="@layout/fragment_splash" />
     <fragment
         android:id="@+id/rootFragment"
         android:name="ru.shvets.myappretrofit.view.root.RootFragment"
-        android:label="fragment_root"
-        tools:layout="@layout/fragment_root" />
+        android:label="@string/title_weather_forecast"
+        tools:layout="@layout/fragment_root" >
+        <argument
+            android:name="city"
+            app:argType="string" />
+    </fragment>
     <fragment
         android:id="@+id/weatherFragment"
         android:name="ru.shvets.myappretrofit.view.weather.WeatherFragment"
-        android:label="fragment_weather"
-        tools:layout="@layout/fragment_weather" />
+        android:label="@string/title_weather"
+        tools:layout="@layout/fragment_weather" >
+        <action
+            android:id="@+id/action_weatherFragment_to_rootFragment"
+            app:destination="@id/rootFragment" />
+    </fragment>
     <fragment
         android:id="@+id/breakingNewsFragment"
         android:name="ru.shvets.myappretrofit.view.news.breaking.BreakingNewsFragment"
-        android:label="fragment_breaking_news"
+        android:label="@string/title_breaking_news"
         tools:layout="@layout/fragment_breaking_news" >
         <action
-            android:id="@+id/action_breakingNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            android:id="@+id/action_breakingNewsFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/savedNewsFragment"
         android:name="ru.shvets.myappretrofit.view.news.saved.SavedNewsFragment"
-        android:label="fragment_saved_news"
+        android:label="@string/title_favorite_news"
         tools:layout="@layout/fragment_saved_news" >
         <action
-            android:id="@+id/action_savedNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            android:id="@+id/action_savedNewsFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchNewsFragment"
         android:name="ru.shvets.myappretrofit.view.news.search.SearchNewsFragment"
-        android:label="fragment_search_news"
+        android:label="@string/title_search_news"
         tools:layout="@layout/fragment_search_news" >
         <action
-            android:id="@+id/action_searchNewsFragment_to_articleFragment"
-            app:destination="@id/articleFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            android:id="@+id/action_searchNewsFragment_to_articleDetailsFragment"
+            app:destination="@id/articleDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/articleFragment"
         android:name="ru.shvets.myappretrofit.view.news.article.ArticleFragment"
-        android:label="fragment_article"
+        android:label="@string/title_article_news"
         tools:layout="@layout/fragment_article" >
+        <argument
+            android:name="article"
+            app:argType="ru.shvets.myappretrofit.data.news.Article" />
+    </fragment>
+    <fragment
+        android:id="@+id/articleDetailsFragment"
+        android:name="ru.shvets.myappretrofit.view.news.details.ArticleDetailsFragment"
+        android:label="@string/title_article_news_brief"
+        tools:layout="@layout/fragment_article_details" >
         <argument
             android:name="article"
             app:argType="ru.shvets.myappretrofit.data.news.Article" />

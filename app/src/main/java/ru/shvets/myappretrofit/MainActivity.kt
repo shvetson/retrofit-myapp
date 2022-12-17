@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +19,8 @@ import ru.shvets.myappretrofit.view.news.NewsViewModel
 import ru.shvets.myappretrofit.view.news.NewsViewModelProviderFactory
 
 class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
+    private lateinit var _binding: ActivityMainBinding
     private val mBinding get() = _binding
-
     lateinit var viewModel: NewsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 //        val navController = navHostFragment.navController
 //        mBinding.bottomNavigation.setupWithNavController(navController)
 
-
 //        Handler(Looper.myLooper()!!).postDelayed({
 //            mBinding?.let {
 //                setContentView(it.root)
@@ -46,18 +47,34 @@ class MainActivity : AppCompatActivity() {
 //        }, 5000)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(5000)
-            mBinding?.let {
+            delay(2000)
+            mBinding.let {
                 setContentView(it.root)
                 it.bottomNavigation.setupWithNavController(
                     navController = it.fragmentContainer.findNavController()
                 )
             }
         }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
+        setSupportActionBar(mBinding.toolbar)
+
+        val navController = (supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment).navController
+        val config = AppBarConfiguration(navController.graph)
+//        Не будет стрелочки домой
+//        val config = AppBarConfiguration(setOf(
+//            R.id.weatherFragment,
+//            R.id.breakingNewsFragment,
+//            R.id.savedNewsFragment,
+//            R.id.searchNewsFragment
+//        ))
+        mBinding.toolbar.setupWithNavController(navController, config)
+        mBinding.bottomNavigation.setupWithNavController(navController)
+
+//        Позволяет вывести в верхнем меню иконку и название приложение (возврат - стрелки нет)
+        NavigationUI.navigateUp(navController, config)
+
+//        NavigationUI.setupActionBarWithNavController(this, navController, config)
+//        NavigationUI.setupWithNavController(mBinding.bottomNavigation, navController)
+
     }
 }

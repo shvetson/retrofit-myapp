@@ -2,17 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@id/weatherFragment"
         android:title="@string/bottom_menu_weather"
-        android:icon="@drawable/ic_weather"/>
+        android:icon="@drawable/ic_weather"
+        android:orderInCategory="1"/>
 
     <item android:id="@id/breakingNewsFragment"
         android:title="@string/bottom_menu_news"
-        android:icon="@drawable/ic_news"/>
+        android:icon="@drawable/ic_news"
+        android:orderInCategory="2"/>
 
     <item android:id="@id/savedNewsFragment"
         android:title="@string/bottom_menu_saved"
-        android:icon="@drawable/ic_favorite"/>
+        android:icon="@drawable/ic_favorite"
+        android:orderInCategory="3" />
 
     <item android:id="@id/searchNewsFragment"
         android:title="@string/bottom_menu_search"
-        android:icon="@drawable/ic_search"/>
+        android:icon="@drawable/ic_search"
+        android:orderInCategory="4"/>
 </menu>

@@ -6,7 +6,7 @@ import ru.shvets.myappretrofit.data.news.Source
 class Converters {
 
     @TypeConverter
-    fun fromSource(source: Source): String {
+    fun fromSource(source: Source): String? {
         return source.name
     }
 

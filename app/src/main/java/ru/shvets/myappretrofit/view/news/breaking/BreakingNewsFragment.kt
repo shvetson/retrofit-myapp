@@ -1,8 +1,9 @@
 package ru.shvets.myappretrofit.view.news.breaking
 
 import android.os.Bundle
-import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,7 +17,6 @@ import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.databinding.FragmentBreakingNewsBinding
 import ru.shvets.myappretrofit.util.Constants.Companion.NEWS_COUNTRY
 import ru.shvets.myappretrofit.util.Constants.Companion.QUERY_PAGE_SIZE
-import ru.shvets.myappretrofit.util.Constants.Companion.TAG
 import ru.shvets.myappretrofit.util.Resource
 import ru.shvets.myappretrofit.util.hide
 import ru.shvets.myappretrofit.util.show
@@ -24,17 +24,29 @@ import ru.shvets.myappretrofit.view.news.NewsAdapter
 import ru.shvets.myappretrofit.view.news.NewsViewModel
 
 class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
-    private lateinit var binding: FragmentBreakingNewsBinding
+    private lateinit var _binding: FragmentBreakingNewsBinding
+    private val mBinding get() = _binding
+//    private lateinit var actionBar: ActionBar
+
     //    private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var viewModel: NewsViewModel
     private val loggingTag: String = BreakingNewsFragment::class.java.simpleName.toString()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentBreakingNewsBinding.inflate(layoutInflater, container,false)
+//        actionBar = (activity as AppCompatActivity).supportActionBar!!
+//        actionBar.setTitle(R.string.title_weather)
+        return mBinding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentBreakingNewsBinding.bind(view)
         viewModel = (activity as MainActivity).viewModel
-
         setupRecyclerView()
 
         newsAdapter.setOnItemClickListener {
@@ -42,10 +54,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             val bundle = Bundle().apply {
                 putParcelable("article", it)
             }
-            Log.d(TAG, bundle.toString())
 
             findNavController().navigate(
-                R.id.action_breakingNewsFragment_to_articleFragment,
+//                R.id.action_breakingNewsFragment_to_articleFragment,
+                R.id.action_breakingNewsFragment_to_articleDetailsFragment,
                 bundle
             )
         }
@@ -54,7 +66,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
             when (response) {
                 is Resource.Success -> {
-                    binding.progressBarNews.hide()
+                    mBinding.progressBarNews.hide()
                     isLoading = false
                     response.data?.let { newsResponse ->
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
@@ -63,19 +75,20 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         isLastPage = viewModel.breakingNewsPage == totalPages
 
                         if (isLastPage) {
-                            binding.recyclerViewBreakingNews.setPadding(0, 0, 0, 0)
+                            mBinding.recyclerViewBreakingNews.setPadding(0, 0, 0, 0)
                         }
                     }
                 }
                 is Resource.Error -> {
-                    binding.progressBarNews.hide()
+                    mBinding.progressBarNews.hide()
                     isLoading = false
                     response.message?.let { message ->
-                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
                 is Resource.Loading -> {
-                    binding.progressBarNews.show()
+                    mBinding.progressBarNews.show()
                     isLoading = true
                 }
             }
@@ -87,7 +100,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     var isLastPage = false
     var isScrolling = false
 
-    private val scrollListener = object: RecyclerView.OnScrollListener() {
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
 
@@ -100,7 +113,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             val isAtLastItem = firstVisiblePosition + visibleItemCount >= totalItemCount
             val isNotAtBeginning = firstVisiblePosition >= 0
             val isTotalMoreThanVisible = totalItemCount >= QUERY_PAGE_SIZE
-            val shouldPaginate = isNotLoadingAngNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
+            val shouldPaginate =
+                isNotLoadingAngNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate) {
                 viewModel.getBreakingNews(NEWS_COUNTRY)
@@ -119,7 +133,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
-        binding.recyclerViewBreakingNews.apply {
+        mBinding.recyclerViewBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(context)
 
