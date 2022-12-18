@@ -14,12 +14,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.shvets.myappretrofit.MainActivity
 import ru.shvets.myappretrofit.R
+import ru.shvets.myappretrofit.data.news.Article
 import ru.shvets.myappretrofit.databinding.FragmentBreakingNewsBinding
 import ru.shvets.myappretrofit.util.Constants.Companion.NEWS_COUNTRY
 import ru.shvets.myappretrofit.util.Constants.Companion.QUERY_PAGE_SIZE
 import ru.shvets.myappretrofit.util.Resource
 import ru.shvets.myappretrofit.util.hide
 import ru.shvets.myappretrofit.util.show
+import ru.shvets.myappretrofit.view.news.NewsActionListener
 import ru.shvets.myappretrofit.view.news.NewsAdapter
 import ru.shvets.myappretrofit.view.news.NewsViewModel
 
@@ -31,14 +33,13 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     //    private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var viewModel: NewsViewModel
-    private val loggingTag: String = BreakingNewsFragment::class.java.simpleName.toString()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBreakingNewsBinding.inflate(layoutInflater, container,false)
+        _binding = FragmentBreakingNewsBinding.inflate(layoutInflater, container, false)
 //        actionBar = (activity as AppCompatActivity).supportActionBar!!
 //        actionBar.setTitle(R.string.title_weather)
         return mBinding.root
@@ -48,19 +49,6 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
-
-        newsAdapter.setOnItemClickListener {
-
-            val bundle = Bundle().apply {
-                putParcelable("article", it)
-            }
-
-            findNavController().navigate(
-//                R.id.action_breakingNewsFragment_to_articleFragment,
-                R.id.action_breakingNewsFragment_to_articleDetailsFragment,
-                bundle
-            )
-        }
 
         viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
 
@@ -126,13 +114,28 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                 isScrolling = true
-
             }
         }
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+
+        newsAdapter = NewsAdapter(object : NewsActionListener {
+            override fun onLikeClicked(article: Article) {
+//                newsViewModel.updateLiked(article)
+            }
+
+            override fun onShareClicked(article: Article) {
+
+            }
+
+            override fun onItemClicked(article: Article) {
+                val direction = BreakingNewsFragmentDirections
+                    .actionBreakingNewsFragmentToArticleDetailsFragment(article)
+                findNavController().navigate(direction)
+            }
+        })
+
         mBinding.recyclerViewBreakingNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(context)

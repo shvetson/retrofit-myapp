@@ -19,6 +19,15 @@ interface WeatherAPI {
         @Query("lang") lang: String = WEATHER_API_LANG
     ): Response<WeatherResponse>
 
+    @GET("data/2.5/weather")
+    suspend fun getCurrentWeatherByCoords(
+        @Query("lon") lon: String,
+        @Query("lat") lat: String,
+        @Query("appid") appid: String = WEATHER_API_KEY,
+        @Query("units") units: String = WEATHER_API_METRIC,
+        @Query("lang") lang: String = WEATHER_API_LANG
+    ): Response<WeatherResponse>
+
     @GET("data/2.5/forecast")
     fun getForecast(
         @Query("q") q: String,

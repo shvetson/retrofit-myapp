@@ -12,6 +12,7 @@ object ListCity {
         "Saratov",
         "Kiev",
         "Minsk",
-        "Vyazniki"
+        "Vyazniki",
+        "Pavshuno"
     )
 }

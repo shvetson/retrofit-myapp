@@ -22,8 +22,8 @@ data class WeatherResponse(
     )
 
     data class Coord(
-        val lat: Double,
-        val lon: Double
+        val lat: Float,
+        val lon: Float
     )
 
     data class Main(

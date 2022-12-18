@@ -1,7 +1,9 @@
-package ru.shvets.myappretrofit.view.weather
+package ru.shvets.myappretrofit.view.weather.current
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.data.weather.Weather
@@ -10,14 +12,11 @@ import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_ICON_URL
 import ru.shvets.myappretrofit.util.concat
 import ru.shvets.myappretrofit.util.roundDouble
 
-class WeatherAdapter(
-    private val items: List<Weather>
-) : RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
+class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     inner class ViewHolder(
         private val binding: ItemWeatherBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: Weather) {
 
             binding.apply {
@@ -34,6 +33,10 @@ class WeatherAdapter(
                     .resize(50, 50)
                     .centerCrop()
                     .into(imageViewIcon)
+
+                root.setOnClickListener {
+                    onItemClickListener?.let { it(item) }
+                }
             }
         }
     }
@@ -45,8 +48,25 @@ class WeatherAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(differ.currentList[position])
     }
 
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = differ.currentList.size
+
+    private val differCallback = object : DiffUtil.ItemCallback<Weather>() {
+        override fun areItemsTheSame(oldItem: Weather, newItem: Weather): Boolean {
+            return oldItem.id == newItem.id
+        }
+        override fun areContentsTheSame(oldItem: Weather, newItem: Weather): Boolean {
+            return oldItem == newItem
+        }
+    }
+
+    val differ = AsyncListDiffer(this, differCallback)
+
+    private var onItemClickListener: ((Weather) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Weather) -> Unit) {
+        onItemClickListener = listener
+    }
 }

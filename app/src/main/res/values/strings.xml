@@ -2,6 +2,7 @@
     <string name="app_name">Helpful</string>
     <string name="splash">Splash</string>
 
+    // Title for nav_graph
     <string name="title_splash">Splash</string>
     <string name="title_weather">Weather</string>
     <string name="title_weather_forecast">Weather and Forecast</string>
@@ -10,25 +11,34 @@
     <string name="title_favorite_news">Favorite News</string>
     <string name="title_article_news">Article</string>
     <string name="title_article_news_brief">Brief article</string>
+    <string name="title_forecast_weather">Details weather</string>
 
+    // Pages titles
     <string name="title_page_current_weather">Current weather</string>
     <string name="subtitle_page_current_weather">List of city</string>
     <string name="title_page_breaking_news">News</string>
     <string name="subtitle_page_breaking_news">Popular News</string>
     <string name="title_page_search_news">Search</string>
     <string name="subtitle_page_article_details">Description</string>
+    <string name="subtitle_page_forecast_weather">5 Days / 3 Hour Forecast</string>
 
+    // Hints
     <string name="hint_search">Musk invited</string>
 
+    // Tabs
     <string name="title_tab_weather">Weather</string>
     <string name="title_tab_news">News</string>
 
+    // Buttons
     <string name="btn_visit_site">Visit site</string>
 
+    // Bottom menu
     <string name="bottom_menu_weather">Weather</string>
     <string name="bottom_menu_news">News</string>
     <string name="bottom_menu_saved">Favourite</string>
     <string name="bottom_menu_search">Search</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    // Messages
+    <string name="msg_weather_feels_like">Feels like </string>
+
 </resources>

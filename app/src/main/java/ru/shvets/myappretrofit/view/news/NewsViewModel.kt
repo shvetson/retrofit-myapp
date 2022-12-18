@@ -45,7 +45,6 @@ class NewsViewModel(
     var searchNewsPage = 1
     var searchNewsResponse: NewsResponse? = null
 
-    //TODO Поправить, передать погоде первоначальную загрузку данных
     init {
         getBreakingNews(NEWS_COUNTRY)
     }

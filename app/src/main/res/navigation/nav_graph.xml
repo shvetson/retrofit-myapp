@@ -10,22 +10,13 @@
         android:label="@string/splash"
         tools:layout="@layout/fragment_splash" />
     <fragment
-        android:id="@+id/rootFragment"
-        android:name="ru.shvets.myappretrofit.view.root.RootFragment"
-        android:label="@string/title_weather_forecast"
-        tools:layout="@layout/fragment_root" >
-        <argument
-            android:name="city"
-            app:argType="string" />
-    </fragment>
-    <fragment
         android:id="@+id/weatherFragment"
-        android:name="ru.shvets.myappretrofit.view.weather.WeatherFragment"
+        android:name="ru.shvets.myappretrofit.view.weather.current.WeatherFragment"
         android:label="@string/title_weather"
         tools:layout="@layout/fragment_weather" >
         <action
-            android:id="@+id/action_weatherFragment_to_rootFragment"
-            app:destination="@id/rootFragment" />
+            android:id="@+id/action_weatherFragment_to_forecastFragment"
+            app:destination="@id/forecastFragment" />
     </fragment>
     <fragment
         android:id="@+id/breakingNewsFragment"
@@ -71,5 +62,13 @@
         <argument
             android:name="article"
             app:argType="ru.shvets.myappretrofit.data.news.Article" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastFragment"
+        android:name="ru.shvets.myappretrofit.view.weather.forecast.ForecastFragment"
+        android:label="@string/title_forecast_weather" >
+        <argument
+            android:name="city"
+            app:argType="ru.shvets.myappretrofit.data.weather.Weather" />
     </fragment>
 </navigation>

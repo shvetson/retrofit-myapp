@@ -16,4 +16,16 @@ class WeatherRepositoryImpl : WeatherRepository {
     ): Response<WeatherResponse> {
         return RetrofitInstance.weatherApi.getCurrentWeather(q, appid, units, lang)
     }
+
+    override suspend fun getCurrentWeatherByCoords(
+        lon: Float,
+        lat: Float,
+        appid: String,
+        units: String,
+        lang: String
+    ): Response<WeatherResponse> {
+        return RetrofitInstance.weatherApi.getCurrentWeatherByCoords(lon.toString(), lat.toString(), appid, units, lang)
+    }
+
+
 }

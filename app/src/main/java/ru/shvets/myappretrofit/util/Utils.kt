@@ -2,9 +2,9 @@ package ru.shvets.myappretrofit.util
 
 import android.view.View
 import android.widget.ProgressBar
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
-
-/** @author Oleg Shvets shvetson@gmail.com on 2022-09-25 */
 
 fun ProgressBar.hide() {
     this.visibility = View.GONE
@@ -29,4 +29,40 @@ fun roundDouble(value: Double, count: Double): Double{
 
 fun String.concat(text: String): String {
     return this + text
+}
+
+private fun hasAccessURL(url: String): Boolean {
+    return try {
+        val command = "ping -c 1 $url"
+        Runtime.getRuntime().exec(command).waitFor() == 0
+    } catch (e: Exception) {
+        false
+    }
+}
+
+fun String.upper(): String {
+    return this.replaceFirstChar {
+        if (it.isLowerCase()) it.titlecase(
+            Locale.ROOT
+        ) else it.toString()
+    }
+}
+
+fun fromDate(date: Date?): Long? {
+    return date?.time
+}
+
+fun toDate(date: Long): Date {
+    return Date(date * 1000)
+}
+
+fun formatDate(date: Date): String {
+    val formatter = SimpleDateFormat("EEEE, d MMMM", Locale.getDefault())
+//    val formatter = SimpleDateFormat("EEEE, d MMMM yyyy - HH:mm", Locale.getDefault())
+    return formatter.format(date)
+}
+
+fun formatDateShort(date: Date): String {
+    val formatter = SimpleDateFormat("dd.MM HH:mm", Locale.getDefault())
+    return formatter.format(date)
 }

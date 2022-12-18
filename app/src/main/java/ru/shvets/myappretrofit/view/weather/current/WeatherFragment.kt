@@ -1,4 +1,4 @@
-package ru.shvets.myappretrofit.view.weather
+package ru.shvets.myappretrofit.view.weather.current
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.shvets.myappretrofit.R
-import ru.shvets.myappretrofit.data.weather.Weather
 import ru.shvets.myappretrofit.databinding.FragmentWeatherBinding
 import ru.shvets.myappretrofit.util.Resource
 import ru.shvets.myappretrofit.util.hide
 import ru.shvets.myappretrofit.util.show
+import ru.shvets.myappretrofit.view.weather.WeatherViewModel
 
 class WeatherFragment : Fragment(R.layout.fragment_weather) {
     private lateinit var _binding: FragmentWeatherBinding
@@ -40,9 +41,23 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
         super.onViewCreated(view, savedInstanceState)
 
         mBinding.recyclerView.apply {
+            weatherAdapter = WeatherAdapter()
+            adapter = weatherAdapter
             layoutManager = LinearLayoutManager(context)
             val divider = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             addItemDecoration(divider)
+        }
+
+        weatherAdapter.setOnItemClickListener {
+
+            val bundle = Bundle().apply {
+                putParcelable("city", it)
+            }
+
+            findNavController().navigate(
+                R.id.action_weatherFragment_to_forecastFragment,
+                bundle
+            )
         }
 
         weatherViewModel.weather.observe(viewLifecycleOwner, Observer { response ->
@@ -52,23 +67,7 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                     mBinding.progressBar.hide()
 
                     response.data?.let { list ->
-
-                        val sortedList = list.sortedWith(object : Comparator<Weather> {
-                            override fun compare(p0: Weather, pi: Weather): Int {
-                                if (p0.city > pi.city) {
-                                    return 1
-                                }
-                                if (p0.city == pi.city) {
-                                    return 0
-                                }
-                                return -1
-                            }
-                        })
-
-                        weatherAdapter = WeatherAdapter(sortedList)
-                        mBinding.recyclerView.adapter = weatherAdapter
-
-//                        newsAdapter.differ.submitList(newsResponse.articles.toList())
+                        weatherAdapter.differ.submitList(list)
                     }
                 }
                 is Resource.Error -> {

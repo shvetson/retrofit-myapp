@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +18,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.shvets.myappretrofit.MainActivity
 import ru.shvets.myappretrofit.R
+import ru.shvets.myappretrofit.data.news.Article
 import ru.shvets.myappretrofit.databinding.FragmentSearchNewsBinding
 import ru.shvets.myappretrofit.util.Constants
 import ru.shvets.myappretrofit.util.Constants.Companion.NEWS_SEARCH_TIME_DELAY
 import ru.shvets.myappretrofit.util.Resource
 import ru.shvets.myappretrofit.util.hide
 import ru.shvets.myappretrofit.util.show
+import ru.shvets.myappretrofit.view.news.NewsActionListener
 import ru.shvets.myappretrofit.view.news.NewsAdapter
 import ru.shvets.myappretrofit.view.news.NewsViewModel
 
@@ -53,18 +54,6 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
-
-        newsAdapter.setOnItemClickListener {
-            val bundle = Bundle().apply {
-                putParcelable("article", it)
-            }
-
-            findNavController().navigate(
-//                R.id.action_searchNewsFragment_to_articleFragment,
-                R.id.action_searchNewsFragment_to_articleDetailsFragment,
-                bundle
-            )
-        }
 
         var job: Job? = null
         mBinding.editTextSearch.addTextChangedListener {editable->
@@ -147,7 +136,18 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     }
 
     private fun setupRecyclerView() {
-        newsAdapter = NewsAdapter()
+        newsAdapter = NewsAdapter(object : NewsActionListener{
+            override fun onItemClicked(article: Article) {
+            }
+
+            override fun onLikeClicked(article: Article) {
+            }
+
+            override fun onShareClicked(article: Article) {
+            }
+
+        })
+
         mBinding.recyclerViewSearchNews.apply {
             adapter = newsAdapter
             layoutManager = LinearLayoutManager(context)

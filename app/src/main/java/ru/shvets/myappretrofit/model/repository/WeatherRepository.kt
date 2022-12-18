@@ -13,4 +13,12 @@ interface WeatherRepository {
         units: String,
         lang: String
     ): Response<WeatherResponse>
+
+    suspend fun getCurrentWeatherByCoords(
+        lon: Float,
+        lat: Float,
+        appid: String,
+        units: String,
+        lang: String
+    ): Response<WeatherResponse>
 }
