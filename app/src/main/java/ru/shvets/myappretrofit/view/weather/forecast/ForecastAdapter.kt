@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import ru.shvets.myappretrofit.data.weather.Forecast
+import ru.shvets.myappretrofit.data.weather.ForecastResponse
 import ru.shvets.myappretrofit.databinding.ItemForecastBinding
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_ICON_URL
 import ru.shvets.myappretrofit.util.concat
@@ -14,13 +14,13 @@ import ru.shvets.myappretrofit.util.toDate
 
 class ForecastAdapter : RecyclerView.Adapter<ForecastAdapter.StartViewHolder>() {
 
-    var items: List<Forecast.HourlyWeather> = listOf()
+    var items: List<ForecastResponse.HourlyWeather> = listOf()
 
     inner class StartViewHolder(
         private val binding: ItemForecastBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Forecast.HourlyWeather) {
+        fun bind(item: ForecastResponse.HourlyWeather) {
             binding.apply {
                 textViewTime.text = formatDateShort(toDate(item.dt))
                 textViewTemp.text = roundDouble(item.main.temp, 10.0).toString()

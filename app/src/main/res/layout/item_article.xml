@@ -53,20 +53,22 @@
 
     <ImageView
         android:id="@+id/image_view_favorite"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="12dp"
+        android:clickable="true"
         android:src="@drawable/ic_favorite_border"
         app:tint="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/linear_layout_article_info"
-        app:layout_constraintEnd_toEndOf="@id/image_view_share"/>
+        app:layout_constraintEnd_toEndOf="@id/image_view_share"
+        android:focusable="true" />
 
     <ImageView
         android:id="@+id/image_view_share"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:src="@drawable/ic_share"
@@ -75,5 +77,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/image_view_favorite"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

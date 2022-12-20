@@ -12,11 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.databinding.FragmentForecastBinding
+import ru.shvets.myappretrofit.util.*
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_ICON_URL
-import ru.shvets.myappretrofit.util.concat
-import ru.shvets.myappretrofit.util.roundDouble
-import ru.shvets.myappretrofit.util.show
-import ru.shvets.myappretrofit.util.upper
 import ru.shvets.myappretrofit.view.weather.WeatherViewModel
 
 class ForecastFragment : Fragment(R.layout.fragment_forecast) {
@@ -43,9 +40,9 @@ class ForecastFragment : Fragment(R.layout.fragment_forecast) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initTitle()
         setupRecyclerView()
+        getData()
     }
 
     private fun initTitle() {
@@ -82,6 +79,17 @@ class ForecastFragment : Fragment(R.layout.fragment_forecast) {
 
             val divider = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             addItemDecoration(divider)
+        }
+    }
+
+    private fun getData() {
+        weatherViewModel.getForecast(city.lon, city.lat)
+        weatherViewModel.forecast.observe(viewLifecycleOwner) {
+            it.let { weather ->
+                forecastAdapter.items = weather.hourly
+                forecastAdapter.notifyDataSetChanged()
+                mBinding.progressBar.hide()
+            }
         }
     }
 }

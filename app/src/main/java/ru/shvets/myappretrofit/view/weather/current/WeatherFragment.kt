@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.databinding.FragmentWeatherBinding
+import ru.shvets.myappretrofit.util.ListCity
 import ru.shvets.myappretrofit.util.Resource
 import ru.shvets.myappretrofit.util.hide
 import ru.shvets.myappretrofit.util.show
@@ -39,7 +40,12 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupBundleAndClickItem()
+        getData()
+    }
 
+    private fun setupRecyclerView() {
         mBinding.recyclerView.apply {
             weatherAdapter = WeatherAdapter()
             adapter = weatherAdapter
@@ -47,9 +53,10 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
             val divider = DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             addItemDecoration(divider)
         }
+    }
 
+    private fun setupBundleAndClickItem() {
         weatherAdapter.setOnItemClickListener {
-
             val bundle = Bundle().apply {
                 putParcelable("city", it)
             }
@@ -59,9 +66,12 @@ class WeatherFragment : Fragment(R.layout.fragment_weather) {
                 bundle
             )
         }
+    }
+
+    private fun getData() {
+        weatherViewModel.getCurrentWeather(ListCity.listCity)
 
         weatherViewModel.weather.observe(viewLifecycleOwner, Observer { response ->
-
             when (response) {
                 is Resource.Success -> {
                     mBinding.progressBar.hide()

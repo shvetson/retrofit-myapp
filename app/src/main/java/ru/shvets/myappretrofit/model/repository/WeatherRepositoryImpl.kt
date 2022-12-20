@@ -1,6 +1,8 @@
 package ru.shvets.myappretrofit.model.repository
 
+import retrofit2.Call
 import retrofit2.Response
+import ru.shvets.myappretrofit.data.weather.ForecastResponse
 import ru.shvets.myappretrofit.data.weather.WeatherResponse
 import ru.shvets.myappretrofit.model.api.RetrofitInstance
 
@@ -27,5 +29,13 @@ class WeatherRepositoryImpl : WeatherRepository {
         return RetrofitInstance.weatherApi.getCurrentWeatherByCoords(lon.toString(), lat.toString(), appid, units, lang)
     }
 
-
+    override suspend fun getForecastByCoords(
+        lon: Float,
+        lat: Float,
+        appid: String,
+        units: String,
+        lang: String
+    ): Call<ForecastResponse> {
+        return RetrofitInstance.weatherApi.getForecastByCoords(lon.toString(), lat.toString(), appid, units, lang)
+    }
 }

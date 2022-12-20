@@ -42,7 +42,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_text_search"
         tools:layout_editor_absoluteX="0dp"
-        tools:listitem="@layout/item_article_preview"/>
+        tools:listitem="@layout/item_article"/>
 
     <ProgressBar
         android:id="@+id/progress_bar_search_news"

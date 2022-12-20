@@ -1,6 +1,8 @@
 package ru.shvets.myappretrofit.util
 
+import android.content.Context
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import java.text.SimpleDateFormat
 import java.util.*
@@ -65,4 +67,14 @@ fun formatDate(date: Date): String {
 fun formatDateShort(date: Date): String {
     val formatter = SimpleDateFormat("dd.MM HH:mm", Locale.getDefault())
     return formatter.format(date)
+}
+
+internal fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, /*flags*/ 0)
+}
+
+internal fun View.showKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.showSoftInput(this, /*flags*/ 0)
 }

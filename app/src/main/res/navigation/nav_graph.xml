@@ -62,6 +62,9 @@
         <argument
             android:name="article"
             app:argType="ru.shvets.myappretrofit.data.news.Article" />
+        <action
+            android:id="@+id/action_articleDetailsFragment_to_articleFragment"
+            app:destination="@id/articleFragment" />
     </fragment>
     <fragment
         android:id="@+id/forecastFragment"

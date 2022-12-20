@@ -2,7 +2,7 @@ package ru.shvets.myappretrofit.data.weather
 
 import com.google.gson.annotations.SerializedName
 
-data class Forecast(
+data class ForecastResponse(
     val city: City,
     val cnt: Int,
     val cod: String,

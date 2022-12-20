@@ -31,14 +31,14 @@ class NewsViewModel(
 //    private val repo: NewsRepository
 //) : ViewModel() {
 
-    private val _breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private val _breakingNews: MutableLiveData<Resource<NewsResponse>> by lazy { MutableLiveData() }
     val breakingNews: LiveData<Resource<NewsResponse>>
         get() = _breakingNews
 
     var breakingNewsPage = 1
     var breakingNewsResponse: NewsResponse? = null
 
-    private val _searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    private val _searchNews: MutableLiveData<Resource<NewsResponse>> by lazy { MutableLiveData() }
     val searchNews: LiveData<Resource<NewsResponse>>
         get() = _searchNews
 

@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import ru.shvets.myappretrofit.MainActivity
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.data.news.Article
@@ -32,7 +33,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     //    private val viewModel: NewsViewModel by viewModels()
     private lateinit var newsAdapter: NewsAdapter
-    private lateinit var viewModel: NewsViewModel
+    private lateinit var newsViewModel: NewsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,10 +48,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+        newsViewModel = (activity as MainActivity).viewModel
         setupRecyclerView()
 
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
+        newsViewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
 
             when (response) {
                 is Resource.Success -> {
@@ -60,7 +61,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                         newsAdapter.differ.submitList(newsResponse.articles.toList())
 
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.breakingNewsPage == totalPages
+                        isLastPage = newsViewModel.breakingNewsPage == totalPages
 
                         if (isLastPage) {
                             mBinding.recyclerViewBreakingNews.setPadding(0, 0, 0, 0)
@@ -105,7 +106,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 isNotLoadingAngNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate) {
-                viewModel.getBreakingNews(NEWS_COUNTRY)
+                newsViewModel.getBreakingNews(NEWS_COUNTRY)
                 isScrolling = false
             }
         }
@@ -122,11 +123,11 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
         newsAdapter = NewsAdapter(object : NewsActionListener {
             override fun onLikeClicked(article: Article) {
-//                newsViewModel.updateLiked(article)
+                newsViewModel.saveArticle(article)
+                Snackbar.make(requireView(), "Article saved successfully!", Snackbar.LENGTH_SHORT).show()
             }
 
             override fun onShareClicked(article: Article) {
-
             }
 
             override fun onItemClicked(article: Article) {

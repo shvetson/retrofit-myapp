@@ -4,18 +4,22 @@ import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.*
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import ru.shvets.myappretrofit.App
-import ru.shvets.myappretrofit.data.weather.Forecast
+import ru.shvets.myappretrofit.data.weather.ForecastResponse
 import ru.shvets.myappretrofit.data.weather.Weather
+import ru.shvets.myappretrofit.util.Constants.Companion.TAG
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_API_KEY
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_API_LANG
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_API_METRIC
-import ru.shvets.myappretrofit.util.ListCity
 import ru.shvets.myappretrofit.util.Resource
 import java.io.IOException
 
@@ -25,44 +29,19 @@ class WeatherViewModel(
 
     private val repo = (application.applicationContext as App).weatherRepository
 
-//    private val _data: MutableLiveData<WeatherResponse> = MutableLiveData()
-//    val weatherCurrent: LiveData<WeatherResponse>
-//        get() = _data
-//
-//    fun getWeather(city: String): LiveData<WeatherResponse> {
-//        val call = repo.getCurrentWeather(
-//            city,
-//            WEATHER_API_KEY,
-//            WEATHER_API_METRIC,
-//            WEATHER_API_LANG
-//        )
-//
-//        call.enqueue(object : Callback<WeatherResponse> {
-//            override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
-//                _data.postValue(response.body())
-//                Log.d(TAG, "OnResponse Success: ${response.message()}")
-//            }
-//
-//            override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
-//                Log.d(TAG, "OnFailure: ${t.message}")
-//            }
-//        })
-//        return _data
-//    }
-
     private val _weather: MutableLiveData<Resource<List<Weather>>> = MutableLiveData()
     val weather: LiveData<Resource<List<Weather>>>
         get() = _weather
 
-    private val _forecast: MutableLiveData<Forecast> = MutableLiveData()
-    val forecast: LiveData<Forecast>
+    private val _forecast: MutableLiveData<ForecastResponse> = MutableLiveData()
+    val forecast: LiveData<ForecastResponse>
         get() = _forecast
 
-    init {
-        getCurrentWeather(ListCity.listCity)
-    }
+//    init {
+//        getCurrentWeather(ListCity.listCity)
+//    }
 
-    private fun getCurrentWeather(listCity: List<String>) = viewModelScope.launch {
+    fun getCurrentWeather(listCity: List<String>) = viewModelScope.launch {
         _weather.postValue(Resource.Loading())
 
         try {
@@ -117,6 +96,27 @@ class WeatherViewModel(
                 else -> _weather.postValue(Resource.Error("Conversion error"))
             }
         }
+    }
+
+     fun getForecast(lon: Float, lat: Float) = viewModelScope.launch {
+        val call = repo.getForecastByCoords(
+            lon,
+            lat,
+            WEATHER_API_KEY,
+            WEATHER_API_METRIC,
+            WEATHER_API_LANG
+        )
+
+        call.enqueue(object : Callback<ForecastResponse> {
+            override fun onResponse(call: Call<ForecastResponse>, response: Response<ForecastResponse>) {
+                _forecast.postValue(response.body())
+                Log.d(TAG, "OnResponse Success: ${response.message()}")
+            }
+
+            override fun onFailure(call: Call<ForecastResponse>, t: Throwable) {
+                Log.d(TAG, "OnFailure: ${t.message}")
+            }
+        })
     }
 
     private fun hasInternetConnection(): Boolean {

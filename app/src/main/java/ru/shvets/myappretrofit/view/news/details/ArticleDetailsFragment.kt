@@ -10,6 +10,7 @@ import android.webkit.URLUtil
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.MainActivity
@@ -44,6 +45,7 @@ class ArticleDetailsFragment : Fragment() {
 
         mBinding?.let { binding ->
             binding.apply {
+
                 article.urlToImage?.let {
                     Picasso.get().load(it).into(imageViewImage)
 //                    Glide.with(this@ArticleDetailsFragment).load(it).into(imageViewImage)
@@ -75,7 +77,13 @@ class ArticleDetailsFragment : Fragment() {
                     }
                 }
 
-                imageViewFavorite.setOnClickListener{
+                btnLoadArticle.setOnClickListener {
+                    val direction = ArticleDetailsFragmentDirections
+                        .actionArticleDetailsFragmentToArticleFragment(article)
+                    findNavController().navigate(direction)
+                }
+
+                imageViewFavorite.setOnClickListener {
                     viewModel.saveArticle(article)
                 }
 

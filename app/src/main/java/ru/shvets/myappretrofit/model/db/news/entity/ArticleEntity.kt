@@ -10,7 +10,7 @@ import ru.shvets.myappretrofit.data.news.Source
 @Entity(
     tableName = "articles",
     indices = [
-        Index("content")
+        Index("url")
     ]
 )
 data class ArticleEntity(

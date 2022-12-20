@@ -9,14 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.data.news.Article
-import ru.shvets.myappretrofit.databinding.ItemArticlePreviewBinding
+import ru.shvets.myappretrofit.databinding.ItemArticleBinding
 
 class NewsAdapter(
     private val listener: NewsActionListener
 ): RecyclerView.Adapter<NewsAdapter.NewsViewHolder>(), View.OnClickListener {
 
     inner class NewsViewHolder(
-        private val binding: ItemArticlePreviewBinding
+        private val binding: ItemArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(article: Article) {
@@ -36,7 +36,7 @@ class NewsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemArticlePreviewBinding.inflate(inflater, parent, false)
+        val binding = ItemArticleBinding.inflate(inflater, parent, false)
 
         binding.apply {
             imageViewShare.setOnClickListener(this@NewsAdapter)
@@ -68,8 +68,8 @@ class NewsAdapter(
         val article = view.tag as Article
 
         when (view.id) {
-            R.id.image_view_share -> listener.onLikeClicked(article)
-            R.id.image_view_favorite -> listener.onItemClicked(article)
+            R.id.image_view_share -> listener.onShareClicked(article)
+            R.id.image_view_favorite -> listener.onLikeClicked(article)
             else -> listener.onItemClicked(article)
         }
     }

@@ -1,7 +1,7 @@
 package ru.shvets.myappretrofit.model.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.map
+import androidx.lifecycle.Transformations
 import retrofit2.Response
 import ru.shvets.myappretrofit.data.news.Article
 import ru.shvets.myappretrofit.data.news.NewsResponse
@@ -32,11 +32,16 @@ class NewsRepositoryImpl(
     }
 
     override fun getAllSavedNewsArticles(): LiveData<List<Article>> {
-        return dao.getAllArticles().map { list->
-            list.map {
-                it.toModelFromEntity()
+        return Transformations.map(dao.getAllArticles()){entities->
+            entities.map { entity ->
+                entity.toModelFromEntity()
             }
         }
+//        return dao.getAllArticles().map { list->
+//            list.map {
+//                it.toModelFromEntity()
+//            }
+//        }
     }
 
     override suspend fun deleteArticle(article: Article) {
@@ -46,6 +51,4 @@ class NewsRepositoryImpl(
     override suspend fun deleteArticleById(articleId: Long) {
         dao.deleteArticleById(articleId)
     }
-
-
 }

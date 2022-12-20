@@ -31,6 +31,7 @@
 
     // Buttons
     <string name="btn_visit_site">Visit site</string>
+    <string name="btn_load_article_from_site">Load article</string>
 
     // Bottom menu
     <string name="bottom_menu_weather">Weather</string>
