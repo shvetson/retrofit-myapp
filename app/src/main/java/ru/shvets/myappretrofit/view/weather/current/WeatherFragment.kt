@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.databinding.FragmentWeatherBinding
+import ru.shvets.myappretrofit.util.Extensions.hide
+import ru.shvets.myappretrofit.util.Extensions.show
 import ru.shvets.myappretrofit.util.ListCity
 import ru.shvets.myappretrofit.util.Resource
-import ru.shvets.myappretrofit.util.hide
-import ru.shvets.myappretrofit.util.show
 import ru.shvets.myappretrofit.view.weather.WeatherViewModel
 
 class WeatherFragment : Fragment(R.layout.fragment_weather) {

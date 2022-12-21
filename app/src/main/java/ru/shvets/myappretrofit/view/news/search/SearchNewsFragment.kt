@@ -22,9 +22,9 @@ import ru.shvets.myappretrofit.data.news.Article
 import ru.shvets.myappretrofit.databinding.FragmentSearchNewsBinding
 import ru.shvets.myappretrofit.util.Constants
 import ru.shvets.myappretrofit.util.Constants.Companion.NEWS_SEARCH_TIME_DELAY
+import ru.shvets.myappretrofit.util.Extensions.hide
+import ru.shvets.myappretrofit.util.Extensions.show
 import ru.shvets.myappretrofit.util.Resource
-import ru.shvets.myappretrofit.util.hide
-import ru.shvets.myappretrofit.util.show
 import ru.shvets.myappretrofit.view.news.NewsActionListener
 import ru.shvets.myappretrofit.view.news.NewsAdapter
 import ru.shvets.myappretrofit.view.news.NewsViewModel

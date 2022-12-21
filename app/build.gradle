@@ -15,6 +15,9 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
 
 //    id 'dagger.hilt.android.plugin'
+
+    id 'com.google.gms.google-services'
+
 }
 
 android {
@@ -67,6 +70,11 @@ dependencies {
     implementation "androidx.fragment:fragment-ktx:1.5.5"
 
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+
+    // Firebase
+//    implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
+//    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.firebase:firebase-auth:21.1.0'
 
     // Serialization
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0'

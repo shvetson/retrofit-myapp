@@ -39,7 +39,20 @@
     <string name="bottom_menu_saved">Favourite</string>
     <string name="bottom_menu_search">Search</string>
 
+    // Toolbar menu
+    <string name="toolbar_menu_action_login">Login</string>
+    <string name="toolbar_menu_action_logout">Logout</string>
+
     // Messages
     <string name="msg_weather_feels_like">Feels like </string>
+
+    <string name="chooser_share_article">Share article</string>
+
+    // Alert Dialog
+    // Logout
+    <string name="alert_dialog_logout_title">Logout</string>
+    <string name="alert_dialog_logout_message">Are you sure you want to sign out?</string>
+    <string name="alert_dialog_logout_positive_button">Sign out</string>
+    <string name="alert_dialog_logout_negative_button">Cancel</string>
 
 </resources>

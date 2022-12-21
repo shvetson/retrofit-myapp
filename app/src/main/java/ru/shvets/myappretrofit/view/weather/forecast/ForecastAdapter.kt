@@ -7,10 +7,10 @@ import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.data.weather.ForecastResponse
 import ru.shvets.myappretrofit.databinding.ItemForecastBinding
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_ICON_URL
-import ru.shvets.myappretrofit.util.concat
-import ru.shvets.myappretrofit.util.formatDateShort
-import ru.shvets.myappretrofit.util.roundDouble
-import ru.shvets.myappretrofit.util.toDate
+import ru.shvets.myappretrofit.util.Extensions.concat
+import ru.shvets.myappretrofit.util.Extensions.formatDateShort
+import ru.shvets.myappretrofit.util.Extensions.roundDouble
+import ru.shvets.myappretrofit.util.Extensions.toDate
 
 class ForecastAdapter : RecyclerView.Adapter<ForecastAdapter.StartViewHolder>() {
 

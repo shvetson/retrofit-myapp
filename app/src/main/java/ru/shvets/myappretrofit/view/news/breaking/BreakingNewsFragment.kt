@@ -1,5 +1,6 @@
 package ru.shvets.myappretrofit.view.news.breaking
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,9 +20,9 @@ import ru.shvets.myappretrofit.data.news.Article
 import ru.shvets.myappretrofit.databinding.FragmentBreakingNewsBinding
 import ru.shvets.myappretrofit.util.Constants.Companion.NEWS_COUNTRY
 import ru.shvets.myappretrofit.util.Constants.Companion.QUERY_PAGE_SIZE
+import ru.shvets.myappretrofit.util.Extensions.hide
+import ru.shvets.myappretrofit.util.Extensions.show
 import ru.shvets.myappretrofit.util.Resource
-import ru.shvets.myappretrofit.util.hide
-import ru.shvets.myappretrofit.util.show
 import ru.shvets.myappretrofit.view.news.NewsActionListener
 import ru.shvets.myappretrofit.view.news.NewsAdapter
 import ru.shvets.myappretrofit.view.news.NewsViewModel
@@ -82,6 +83,10 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 }
             }
         })
+
+        newsViewModel.onShareContent.observe(viewLifecycleOwner) { content ->
+            launchShareIntent(content)
+        }
     }
 
     // Реализация скроллинга списка RecyclerView для плавного отображения и загрузки инфо по необходимости
@@ -128,6 +133,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
             }
 
             override fun onShareClicked(article: Article) {
+                newsViewModel.onShareClicked(article)
             }
 
             override fun onItemClicked(article: Article) {
@@ -146,5 +152,19 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
             addOnScrollListener(this@BreakingNewsFragment.scrollListener)
         }
+    }
+
+    private fun launchShareIntent(content: String) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, content)
+        }
+
+        val shareIntent =
+            Intent.createChooser(
+                intent, getString(R.string.chooser_share_article)
+            )
+        startActivity(shareIntent)
     }
 }

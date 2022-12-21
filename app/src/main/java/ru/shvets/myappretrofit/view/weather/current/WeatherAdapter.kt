@@ -4,15 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.data.weather.Weather
 import ru.shvets.myappretrofit.databinding.ItemWeatherBinding
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_ICON_URL
-import ru.shvets.myappretrofit.util.concat
-import ru.shvets.myappretrofit.util.roundDouble
+import ru.shvets.myappretrofit.util.Extensions.concat
+import ru.shvets.myappretrofit.util.Extensions.roundDouble
 
-class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
+class WeatherAdapter: ListAdapter<Weather, WeatherAdapter.ViewHolder>(ItemCallback) {
 
     inner class ViewHolder(
         private val binding: ItemWeatherBinding
@@ -53,7 +54,7 @@ class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int = differ.currentList.size
 
-    private val differCallback = object : DiffUtil.ItemCallback<Weather>() {
+    object ItemCallback : DiffUtil.ItemCallback<Weather>() {
         override fun areItemsTheSame(oldItem: Weather, newItem: Weather): Boolean {
             return oldItem.id == newItem.id
         }
@@ -62,7 +63,7 @@ class WeatherAdapter: RecyclerView.Adapter<WeatherAdapter.ViewHolder>() {
         }
     }
 
-    val differ = AsyncListDiffer(this, differCallback)
+    val differ = AsyncListDiffer(this, ItemCallback)
 
     private var onItemClickListener: ((Weather) -> Unit)? = null
 

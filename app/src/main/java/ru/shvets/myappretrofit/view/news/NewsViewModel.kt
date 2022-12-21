@@ -1,5 +1,6 @@
 package ru.shvets.myappretrofit.view.news
 
+import SingleLiveEvent
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
@@ -44,6 +45,8 @@ class NewsViewModel(
 
     var searchNewsPage = 1
     var searchNewsResponse: NewsResponse? = null
+
+    val onShareContent = SingleLiveEvent<String>()
 
     init {
         getBreakingNews(NEWS_COUNTRY)
@@ -185,5 +188,9 @@ class NewsViewModel(
             }
         }
         return false
+    }
+
+    fun onShareClicked(article: Article) {
+        onShareContent.value = article.title.toString()
     }
 }

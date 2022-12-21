@@ -12,8 +12,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.squareup.picasso.Picasso
 import ru.shvets.myappretrofit.R
 import ru.shvets.myappretrofit.databinding.FragmentForecastBinding
-import ru.shvets.myappretrofit.util.*
 import ru.shvets.myappretrofit.util.Constants.Companion.WEATHER_ICON_URL
+import ru.shvets.myappretrofit.util.Extensions.concat
+import ru.shvets.myappretrofit.util.Extensions.hide
+import ru.shvets.myappretrofit.util.Extensions.roundDouble
+import ru.shvets.myappretrofit.util.Extensions.show
+import ru.shvets.myappretrofit.util.Extensions.upper
 import ru.shvets.myappretrofit.view.weather.WeatherViewModel
 
 class ForecastFragment : Fragment(R.layout.fragment_forecast) {
